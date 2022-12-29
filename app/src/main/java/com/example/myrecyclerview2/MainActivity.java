@@ -1,8 +1,8 @@
 package com.example.myrecyclerview2;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,21 +13,22 @@ import android.support.v7.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements Mes_ReunionAdapter.OnEditListener {
 
@@ -35,16 +36,15 @@ public class MainActivity extends AppCompatActivity implements Mes_ReunionAdapte
      Mes_ReunionAdapter monAdapter;
 
     ArrayList<Liste_Reunion> mesReunionArrayList;
-    private EditText nameReunion, liste_emailReunion, sujetReunion, salleReunion, heureReunion;
-    private Button add;
+    private EditText nameReunion, liste_emailReunion, sujetReunion, heureReunion;
     ImageView buttonAddFloat;
+    ImageView mRound;
     int t1Hour, t1Minute;
-
-
+    String item;
     AlertDialog alertDialog;
-
     ImageView mimage_Delete;
-    AlertDialog.Builder builder;
+    Spinner salleReunion;
+    String[] items = {"Salle 1", "Salle 2", "Salle 3", "Salle 4", "Salle 5", "Salle 6", "Salle 7", "Salle 8","Salle 9", "Salle 10"};
 
 
 
@@ -62,19 +62,10 @@ public class MainActivity extends AppCompatActivity implements Mes_ReunionAdapte
         liste_emailReunion = findViewById(R.id.liste_emailReunion);
         nameReunion = findViewById(R.id.nameReunion);
         sujetReunion = findViewById(R.id.AjoutReunion_editText_sujet);
-        salleReunion = findViewById(R.id.AjoutReunion_editText_salle);
         heureReunion = findViewById(R.id.AjoutReunion_timeText_hour);
         buttonAddFloat = findViewById(R.id.newAdd);
-
-
-
+        mRound = findViewById(R.id.rlImage);
         mimage_Delete =findViewById(R.id.image_Delete);
-
-
-
-
-
-
 
 
         mRecyclerView.setHasFixedSize(true);
@@ -85,51 +76,66 @@ public class MainActivity extends AppCompatActivity implements Mes_ReunionAdapte
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.activity_ajout_reunion, null);
-                EditText nameReunion = (EditText) mView.findViewById(R.id.nameReunion);
-                EditText     liste_emailReunion = (EditText) mView.findViewById(R.id.liste_emailReunion);
-                EditText   sujetReunion = (EditText) mView.findViewById(R.id.AjoutReunion_editText_sujet);
-                Button add = (Button) mView.findViewById(R.id.AjoutReunion_button_ajouterNouvelleReunion);
+                EditText nameReunion =  mView.findViewById(R.id.nameReunion);
+                EditText     liste_emailReunion =  mView.findViewById(R.id.liste_emailReunion);
+                EditText   sujetReunion =  mView.findViewById(R.id.AjoutReunion_editText_sujet);
+                Button add = mView.findViewById(R.id.AjoutReunion_button_ajouterNouvelleReunion);
 
 
-
-
-
-                EditText heureReunion = (EditText) mView.findViewById(R.id.AjoutReunion_timeText_hour);
+                EditText heureReunion = mView.findViewById(R.id.AjoutReunion_timeText_hour);
                 heureReunion.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
                             @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                                 t1Hour = hourOfDay;
-                                t1Minute = minute;
+                                t1Minute = minutes;
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.set(0,0,0,t1Hour,t1Minute);
                                 heureReunion.setText(DateFormat.format("hh:mm aa", calendar));
                             }
                         }, 12,0,false);
+                            timePickerDialog.show();
+                    }
+                });
+
+
+                Spinner  salleReunion = mView.findViewById(R.id.spinner_salle);
+
+
+                ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_item,items);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                salleReunion.setAdapter(adapter);
+                salleReunion.setOnItemSelectedListener(null);
+                String selection = "Salle 1";
+                int spinnerPosition = adapter.getPosition(selection);
+                salleReunion.setSelection(spinnerPosition);
+
+                salleReunion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Toast.makeText(MainActivity.this,""+items[position]+"Selected..",Toast.LENGTH_SHORT).show();
+                    item= items[position];
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
 
                     }
                 });
 
-                Spinner  salleReunion = (Spinner) mView.findViewById(R.id.spinner_salle);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.LesSalles));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                salleReunion.setAdapter(adapter);
-
-
-
-
-
                 add.setOnClickListener(view1 -> {
                     String strNameReunion="",strListe_emailReunion="" , strHeureReunion = "";
+                    String salle="";
                     if (nameReunion.getText()!= null){
                         strNameReunion= nameReunion.getText().toString();
                     }
                     if (strNameReunion.equals("")){
-                        Toast.makeText(MainActivity.this,"Inserer le numero de la Reunion/Exemple: Reunion 1",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Inserer le numero de la Reunion/Exemple: Reunion A",Toast.LENGTH_LONG).show();
                         return;
                     }
+                    salle=item;
 
                     if (liste_emailReunion.getText()!= null){
                         strListe_emailReunion= liste_emailReunion.getText().toString();
@@ -145,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements Mes_ReunionAdapte
                         Toast.makeText(MainActivity.this,"Inserer le numero de la Reunion/Exemple: Reunion A",Toast.LENGTH_LONG).show();
                         return;
                     }
-                    ajouter(strNameReunion,strListe_emailReunion,strHeureReunion);
+                    ajouter(strNameReunion,strListe_emailReunion,strHeureReunion,salle);
 
                 });
                 mBuilder.setView(mView);
@@ -155,36 +161,23 @@ public class MainActivity extends AppCompatActivity implements Mes_ReunionAdapte
             }
 
         });
-
-
-
-
-
-
-
-
-
-
-
     }
 
-    public void ajouter(String strNameReunion, String strListe_emailReunion, String strheureReunion){
+    public void ajouter(String strNameReunion, String strListe_emailReunion, String strheureReunion, String salle){
      Liste_Reunion obj = new Liste_Reunion();
      obj.setNameReunion(strNameReunion);
      obj.setListe_emailReunion(strListe_emailReunion);
      obj.setHeureReunion(strheureReunion);
+     obj.setSalle(salle);
 
 
      mesReunionArrayList.add(obj);
 
+
      monAdapter = new Mes_ReunionAdapter(this, mesReunionArrayList, this::onEditClick);
+
      mRecyclerView.setAdapter(monAdapter);
-
-
-
-}
-
-
+    }
 
     @Override
     public void onEditClick(Liste_Reunion listCurrentData, int currentPosition) {
@@ -226,10 +219,6 @@ public class MainActivity extends AppCompatActivity implements Mes_ReunionAdapte
             }
             modifier(strNameReunion,strListe_emailReunion, currentPosition);
         });
-
-
-
-
         cancelAlD.setOnClickListener(view1 -> {
             alertDialog.cancel();
         });
@@ -245,6 +234,83 @@ public void modifier(String strNameReunion, String strListe_emailReunion, int cu
     alertDialog.cancel();
 }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.filter_by_place_item:
+                LayoutInflater inflater = getLayoutInflater();
+                View view = inflater.inflate(R.layout.alert_dialog_spinner, null);
+
+                alertDialog = new AlertDialog.Builder(MainActivity.this).setView(view).create();
+                alertDialog.show();
+
+                Button buttonOut = view.findViewById(R.id.button2);
+                Button buttonOk = view.findViewById(R.id.button);
 
 
+                salleReunion= view.findViewById(R.id.spinner_salle);
+                Spinner  salleReunion = (Spinner) view.findViewById(R.id.spinner_salle);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, items);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                salleReunion.setAdapter(adapter);
+
+
+                buttonOut.setOnClickListener(view1 -> {
+                    alertDialog.cancel();
+                });
+                buttonOk.setOnClickListener(view1 -> {
+                    String searchstr = salleReunion.getSelectedItem().toString();
+                    monAdapter.getFilter().filter(salleReunion.getSelectedItem().toString());
+                });
+                return true;
+
+            case R.id.filter_by_date2_item:
+                LayoutInflater inflate = getLayoutInflater();
+                View vieww = inflate.inflate(R.layout.alert_dialog_heure, null);
+
+                alertDialog = new AlertDialog.Builder(MainActivity.this).setView(vieww).create();
+                alertDialog.show();
+
+                Button buttonCancel = vieww.findViewById(R.id.button2);
+                Button buttonEnter = vieww.findViewById(R.id.button);
+
+
+                EditText heureReunion= vieww.findViewById(R.id.AjoutReunion_timeText_hour);
+                heureReunion.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                                t1Hour = hourOfDay;
+                                t1Minute = minutes;
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(0,0,0,t1Hour,t1Minute);
+                                heureReunion.setText(DateFormat.format("hh:mm aa", calendar));
+                            }
+                        }, 12,0,false);
+                        timePickerDialog.show();
+                    }
+                });
+                buttonCancel.setOnClickListener(view1 -> {
+                    alertDialog.cancel();
+                });
+                buttonEnter.setOnClickListener(view1 -> {
+                    String searchstr = heureReunion.getText().toString();
+                    monAdapter.getFilter().filter(heureReunion.getText().toString());
+                });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

@@ -1,16 +1,39 @@
 <resources>
     <string name="app_name">Ma réu</string>
+    <string name="LesSalles">Peach</string>
+    <string name="Mario">Mario</string>
+    <string name="Luigi">Luigi</string>
+    <string name="Robert">Robert</string>
+    <string name="Marcus">Marcus</string>
+    <string name="Marc">Marc</string>
+    <string name="Moy">Moy</string>
+    <string name="Straff">Straff</string>
+    <string name="Roy">Roy</string>
+    <string name="Mari">Mari</string>
+    <string name="entrez_l_heure_de_la_reunion">Entrez L\'heure de la reunion</string>
+    <string name="ok">OK</string>
+    <string name="retour">Retour</string>
+    <string name="OkSpinner">OK</string>
+    <string name="retourSpinner">Retour</string>
+    <string name="filtrer_par_lieu">Filtrer par lieu</string>
+    <string name="filtrer_par_date">Filtrer par Date</string>
+    <string name="todo">TODO</string>
+    <string name="r_union_a">Réunion A</string>
+    <string name="heure">- Heure</string>
+    <string name="mc">- MC</string>
+    <string name="todo1">TODO</string>
+    <string name="todo2">TODO</string>
     <string-array name="LesSalles">
-        <item>Salle 1</item>
-        <item>Salle 2</item>
-        <item>Salle 3</item>
-        <item>Salle 4</item>
-        <item>Salle 5</item>
-        <item>Salle 6</item>
-        <item>Salle 7</item>
-        <item>Salle 8</item>
-        <item>Salle 9</item>
-        <item>Salle 10</item>
+        <item>Peach</item>
+        <item>Mario</item>
+        <item>Luigi</item>
+        <item>Robert</item>
+        <item>Straf</item>
+        <item>Mari</item>
+        <item>Roy</item>
+        <item>Marc</item>
+        <item>Marcus</item>
+        <item>Moy</item>
 
     </string-array>
 </resources>

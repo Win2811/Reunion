@@ -4,6 +4,24 @@ package com.example.myrecyclerview2;
      String heureReunion;
      String nameReunion;
      String liste_emailReunion;
+     //date
+     String salle;     //salle
+
+
+
+
+
+
+
+     public String getSalle() {
+
+         return salle;
+     }
+
+     public void setSalle(String salle) {
+
+         this.salle = salle;
+     }
 
      public String getHeureReunion() {
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="18dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <Spinner
+        android:id="@+id/spinner_salle"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/purple_500"
+        android:text="@string/OkSpinner"
+        app:layout_constraintLeft_toRightOf="@id/button2"
+        app:layout_constraintTop_toBottomOf="@id/spinner_salle" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="96dp"
+        android:background="@color/purple_500"
+        android:text="@string/retourSpinner"
+        app:layout_constraintRight_toLeftOf="@id/button"
+        app:layout_constraintTop_toBottomOf="@id/spinner_salle" />
+
+</android.support.constraint.ConstraintLayout>

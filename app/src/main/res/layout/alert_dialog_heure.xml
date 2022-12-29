@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="18dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <EditText
+        android:id="@+id/AjoutReunion_timeText_hour"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/entrez_l_heure_de_la_reunion"
+        android:inputType="time"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/purple_500"
+        android:text="@string/ok"
+        app:layout_constraintLeft_toRightOf="@id/button2"
+        app:layout_constraintTop_toBottomOf="@id/AjoutReunion_timeText_hour" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="96dp"
+        android:background="@color/purple_500"
+        android:text="@string/retour"
+        app:layout_constraintRight_toLeftOf="@id/button"
+        app:layout_constraintTop_toBottomOf="@id/AjoutReunion_timeText_hour" />
+
+</android.support.constraint.ConstraintLayout>
